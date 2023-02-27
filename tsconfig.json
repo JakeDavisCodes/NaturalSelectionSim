@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es5",
+    "module": "commonjs",
+    "noEmit": true,
+    "outDir": "sim/public",
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "declaration": true,
+    "isolatedModules": true // Ensure that Babel can safely transpile files in the TypeScript project
+  }
+}
