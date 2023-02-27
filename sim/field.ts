@@ -48,7 +48,7 @@ class Field {
     for (let i = 0; i < this.foodCount; i++) {
       this.createFood();
     }
-    this.foodCount = this.foodCount * (1 - this.foodOffest)
+    this.foodCount = Math.floor(this.foodCount * (1 - this.foodOffest))
   }
 
   createFood () {

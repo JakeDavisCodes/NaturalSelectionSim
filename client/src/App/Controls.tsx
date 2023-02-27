@@ -15,6 +15,12 @@ function Controls ({ field, setField, update }) {
     field.positionCreatures()
     setField(field)
   }
+  const step = () => {
+    field.step();
+  }
+  const generation = () => {
+    field.nextGen();
+  }
 
   return (
     <div id="Controls">
@@ -28,8 +34,11 @@ function Controls ({ field, setField, update }) {
         <input type="text" id="foodAmount" onChange={(e) => setFoodAmount(+e.target.value)}></input>
         <label>Food Offset: </label>
         <input type="text" id="foodOffset" onChange={(e) => setFoodOffset(+e.target.value)}></input>
-        <button id="CreateField" onClick={createField}>Create!</button>
+
       </div>
+      <button id="CreateField" onClick={createField}>Create!</button>
+      <button className="step" onClick={step}>Step</button>
+      <button className="generation" onClick={generation}>Next Generation</button>
     </div>
   )
 };
