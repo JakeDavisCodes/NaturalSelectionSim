@@ -49,11 +49,10 @@ class Creature {
       this.x = 0;
       this.y = Math.floor(Math.random() * fieldSize)
     }
-console.log(this.x, this.y)
+
     if (matrix[this.y][this.x] === 0) {
       matrix[this.y][this.x] = this;
     } else {
-      console.log('OCCUPIED' , matrix[this.y][this.x])
       this.load(matrix);
     }
   }

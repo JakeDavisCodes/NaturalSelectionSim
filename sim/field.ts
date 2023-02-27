@@ -44,14 +44,14 @@ class Field {
   generateFood () {
     this.food = [];
     for (let i = 0; i < this.foodCount; i++) {
-      this.placeFood();
+      this.createFood();
     }
   }
 
-  placeFood () {
-    const x = Math.floor(Math.random() * (this.fieldSize * 0.8)) + (this.fieldSize * 0.1)
-    const y = Math.floor(Math.random() * (this.fieldSize * 0.8)) + (this.fieldSize * 0.1)
-    this.food.push(new Food(x, y));
+  createFood () {
+    const thisFood = new Food()
+    thisFood.load(this.matrix);
+    this.food.push(thisFood);
   }
 }
 
