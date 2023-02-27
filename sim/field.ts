@@ -7,6 +7,7 @@ class Field {
   creatures = new Array<typeof Creature>();
   foodCount: number;
   food = new Array<typeof Food>();
+  matrix: any[][];
 
   constructor (fieldSize = 20, creatureCount = 30) {
     this.fieldSize = fieldSize;
@@ -14,7 +15,14 @@ class Field {
     this.foodCount = creatureCount * 2;
     this.creatures = new Array<typeof Creature>();
     this.food = new Array<typeof Food>();
+
+    this.matrix = []
   }
+
+  buildMatrix () {
+    this.matrix = Array(this.fieldSize).fill().map(() => Array(this.fieldSize).fill());
+  }
+
 
   populate () {
     this.creatures = [];

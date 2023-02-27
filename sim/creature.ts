@@ -4,8 +4,8 @@ const names = ['Shep Josh', 'Shep Kally', 'Shep Sean', 'Shep Soph', '"Nat"', 'Ai
 
 class Creature {
   size: number;
+  sight: number;
   movementSpeed: number;
-  stepsToChangeDirection: number;
 
   name: string;
   generationsSurvived: number;
@@ -18,12 +18,12 @@ class Creature {
 
   constructor () {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
-    this.movementSpeed = Math.random() * 2 + 4;
-    this.stepsToChangeDirection = Math.floor(Math.random() * 2 + 2);
+    this.movementSpeed = 1;
+    this.sight = 2;
     this.generationsSurvived = 0;
     this.children = 0;
     this.foodEaten = 0;
-    this.size = Math.floor(Math.random() * 20 + 10);
+    this.size = Math.floor(Math.random() * 10 + 10);
     this.creaturesKilled = 0;
 
     this.x = 0;
@@ -31,15 +31,21 @@ class Creature {
   }
 
   load (fieldSize: number) {
-    const top = Math.floor(Math.random() * 2) === 0 ? false : true;
-    const right = Math.floor(Math.random() * 2) === 0 ? false : true;
+    const wall = Math.floor(Math.random() * 4);
 
-    this.y = top ? fieldSize * 0.8 : 0;
-    this.y += Math.floor(Math.random() * (fieldSize * 0.1 + 1));
-    this.x = right ? fieldSize * 0.8 : 0;
-    this.x += Math.floor(Math.random() * (fieldSize * 0.1 + 1));
-
-    console.log(this.x, this.y)
+    if (wall === 0) {
+      this.x = Math.floor(Math.random() * fieldSize)
+      this.y = 0;
+    } else if (wall === 1) {
+      this.x = fieldSize;
+      this.y = Math.floor(Math.random() * fieldSize)
+    } else if (wall === 2) {
+      this.x = Math.floor(Math.random() * fieldSize)
+      this.y = fieldSize;
+    } else {
+      this.x = 0;
+      this.y = Math.floor(Math.random() * fieldSize)
+    }
   }
 
   eat () {

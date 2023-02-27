@@ -8,6 +8,8 @@ function App () {
   field.populate()
   field.generateFood()
   field.positionCreatures()
+  field.buildMatrix()
+  console.log(field.matrix, field.matrix[0])
   console.log(field.creatures[0])
   console.log(field.food[1])
 
