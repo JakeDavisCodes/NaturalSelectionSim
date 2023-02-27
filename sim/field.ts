@@ -8,18 +8,22 @@ class Field {
   constructor (fieldSize = 20, creatureCount = 50) {
     this.fieldSize = fieldSize;
     this.creatureCount = creatureCount;
-    this.creatures = [];
+    this.creatures = new Array<typeof Creature>();
 
   }
 
   populate () {
     this.creatures = [];
     for (let i = 0; i < this.creatureCount; i++) {
-      this.creatures.push(new Creature ())
+      this.createCreature()
     }
   }
 
   createCreature () {
-
+    this.creatures.push(new Creature ())
   }
 }
+
+const field = new Field();
+field.populate();
+console.log(field.creatures[10])
