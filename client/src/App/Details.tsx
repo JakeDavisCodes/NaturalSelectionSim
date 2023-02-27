@@ -7,7 +7,7 @@ function Details ({ selected }) {
   )
   return (
     <div id="Details">
-      <p>{selected.name}</p>
+      <h2>{selected.name}</h2>
     </div>
   )
 };

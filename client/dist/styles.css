@@ -5,10 +5,11 @@
   display: flex;
   justify-content: center;
 }
-#Details {
-  width: 100px;
-  height: 100px;
-  display: inline;
+#Details, #Controls {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .col {
   display: inline;
@@ -24,4 +25,12 @@
 }
 .food {
   background-color: greenyellow;
+}
+input, label {
+  display: block;
+}
+button {
+  width: 50%;
+  margin-top: 30px;
+  padding: 20px;
 }
