@@ -1,6 +1,14 @@
 #Display {
-  position: absolute;
   display: flex;
+}
+#Container {
+  display: flex;
+  justify-content: center;
+}
+#Details {
+  width: 100px;
+  height: 100px;
+  display: inline;
 }
 .col {
   display: inline;

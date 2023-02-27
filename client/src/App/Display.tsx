@@ -1,13 +1,13 @@
 import React from 'react';
 
-function Display ({ field }) {
+function Display ({ field, onSelect }) {
 
   return (
     <div id="Display">
       {field.matrix.map((col) => (
         <div className="col">
           {col.map((square) => (
-            <div className={`square ${square === 0 ? 'empty' : square.type}`}></div>
+            <div className={`square ${square === 0 ? 'empty' : square.type}`} onClick={() => onSelect(square)}></div>
           ))}
         </div>
       ))}
