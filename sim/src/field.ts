@@ -1,4 +1,4 @@
-const Creature = require('./creature.ts');
+const Creature = require('./creature.ts').default;
 
 class Field {
   creatureCount: number;
@@ -24,6 +24,4 @@ class Field {
   }
 }
 
-const field = new Field();
-field.populate();
-console.log(field.creatures[10])
+export default Creature;
