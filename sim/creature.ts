@@ -13,6 +13,9 @@ class Creature {
   foodEaten: number;
   creaturesKilled: number;
 
+  x: number;
+  y: number;
+
   constructor () {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
     this.movementSpeed = Math.random() * 2 + 4;
@@ -22,6 +25,19 @@ class Creature {
     this.foodEaten = 0;
     this.size = Math.floor(Math.random() * 20 + 10);
     this.creaturesKilled = 0;
+
+    this.x = 0;
+    this.y = 0;
+  }
+
+  load (fieldSize: number) {
+    const top = Math.floor(Math.random() * 2) === 0 ? false : true;
+    const right = Math.floor(Math.random() * 2) === 0 ? false : true;
+
+    this.y = top ? fieldSize * 0.8 : 0;
+    this.y += fieldSize * 0.1;
+    this.x = right ? fieldSize * 0.8 : 0;
+    this.x += fieldSize * 0.1;
   }
 
   eat () {
