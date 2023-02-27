@@ -3,7 +3,7 @@ const nouns = ['autonoumus unicorn', 'one', 'being', 'god', 'fool', 'clown', 'bu
 const names = ['Shep Josh', 'Shep Kally', 'Shep Sean', 'Shep Soph', '"Nat"', 'Aimee', 'Alex', 'Archaa', 'Arpan', 'Mr. August', 'President Bolton', 'Space Bolton', 'Brett', 'Britta', 'Daniel', 'David', 'Demi', 'Donna', 'Erik', 'Gauri', 'George', 'Jacob', 'Jake', 'Jerrod', 'Jessica', 'Kathy', 'Kevin GPT', 'Kev', 'Mark', 'Mylani', 'Nathaniel', 'Patrick', 'Quanjing', 'Samuel', 'Sandy', 'Terrence', 'Tom', 'Tyler', 'Will', 'Josh', 'Zhixiang', 'Uncle J']
 
 class Creature {
-  size: number;
+  mutationRate: number;
   sight: number;
   movementSpeed: number;
 
@@ -12,6 +12,7 @@ class Creature {
   children: number;
   foodEaten: number;
   creaturesKilled: number;
+  lastDir: string;
 
   x: number;
   y: number;
@@ -21,15 +22,16 @@ class Creature {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
     this.movementSpeed = 1;
     this.sight = 2;
+    this.mutationRate = 1;
     this.generationsSurvived = 0;
     this.children = 0;
     this.foodEaten = 0;
-    this.size = Math.floor(Math.random() * 10 + 10);
     this.creaturesKilled = 0;
     this.type = 'creature';
 
     this.x = 0;
     this.y = 0;
+    this.lastDir = null;
   }
 
   load (matrix: any[][]) {
@@ -61,9 +63,82 @@ class Creature {
     this.foodEaten++;
   }
 
-  fight (opponent: Creature) {
-    if (opponent.size === this.size) return Math.floor(Math.random() * 2) === 1 ? true : false;
-    return this.size > opponent.size;
+  view (matrix: any[][]) {
+    const seen: any[] = []
+
+    let curr;
+    for (let i = 1; i <= this.sight; i++) {
+      curr = this.x + i;
+      if (curr > matrix.length - 1 || curr < 0 || matrix[this.y][curr].type === 'creature') break;
+      if (matrix[this.y][curr].type === 'food') {
+        seen.push(matrix[this.y][curr]);
+        break;
+      }
+    }
+    for (let i = 1; i <= this.sight; i++) {
+      curr = this.x - i;
+      if (curr > matrix.length - 1 || curr < 0 || matrix[this.y][curr].type === 'creature') break;
+      if (matrix[this.y][curr].type === 'food') {
+        seen.push(matrix[this.y][curr]);
+        break;
+      }
+    }
+    for (let i = 1; i <= this.sight; i++) {
+      curr = this.y + i;
+      if (curr > matrix.length - 1 || curr < 0 || matrix[curr][this.x].type === 'creature') break;
+      if (matrix[curr][this.x].type === 'food') {
+        seen.push(matrix[curr][this.x]);
+        break;
+      }
+    }
+    for (let i = 1; i <= this.sight; i++) {
+      curr = this.y - i;
+      if (curr > matrix.length - 1 || curr < 0 || matrix[curr][this.x].type === 'creature') break;
+      if (matrix[curr][this.x].type === 'food') {
+        seen.push(matrix[curr][this.x]);
+        break;
+      }
+    }
+
+    return seen[0];
+  }
+
+  move (matrix: any[][], dir: string) {
+    let x, y;
+    if (dir === 'right') x = this.x + 1
+    if (dir === 'left') x = this.x - 1
+    if (dir === 'up') y = this.y + 1
+    if (dir === 'down') y = this.y - 1
+
+    const target = matrix[y][x];
+    if (target === 0 || target.type === 'food') {
+      matrix[y][x] = this;
+      matrix[this.y][this.x] = 0;
+    }
+  }
+
+  step (matrix: any[][]) {
+    let steps:number = this.movementSpeed;
+
+    while (steps !== 0) {
+      const view:any = this.view(matrix);
+      let dir;
+
+      if (view) {
+        if (view.x > this.x) dir = 'right';
+        if (view.x < this.x) dir = 'left';
+        if (view.y > this.x) dir = 'up';
+        if (view.y < this.x) dir = 'down';
+      } else {
+        dir = this.lastDir ? [this.lastDir, this.lastDir] : [];
+        if (this.x + 1 < 20) dir.push('right');
+        if (this.x - 1 >= 0) dir.push('left');
+        if (this.y + 1 < 20) dir.push('up');
+        if (this.y - 1 >= 0) dir.push('down');
+        dir = dir[Math.floor(Math.random() * dir.length)];
+      }
+      this.move(matrix, dir);
+    }
   }
 }
 
