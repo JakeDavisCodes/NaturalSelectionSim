@@ -1,0 +1,27 @@
+#Display {
+  display: flex;
+}
+#Container {
+  display: flex;
+  justify-content: center;
+}
+#Details {
+  width: 100px;
+  height: 100px;
+  display: inline;
+}
+.col {
+  display: inline;
+}
+.square {
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  margin: 3px;
+}
+.creature {
+  background-color: red;
+}
+.food {
+  background-color: greenyellow;
+}
