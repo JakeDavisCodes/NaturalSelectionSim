@@ -15,6 +15,7 @@ class Creature {
 
   x: number;
   y: number;
+  type: string;
 
   constructor () {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
@@ -25,13 +26,15 @@ class Creature {
     this.foodEaten = 0;
     this.size = Math.floor(Math.random() * 10 + 10);
     this.creaturesKilled = 0;
+    this.type = 'creature';
 
     this.x = 0;
     this.y = 0;
   }
 
-  load (fieldSize: number) {
+  load (matrix: any[][]) {
     const wall = Math.floor(Math.random() * 4);
+    const fieldSize = matrix.length - 1;
 
     if (wall === 0) {
       this.x = Math.floor(Math.random() * fieldSize)
@@ -45,6 +48,13 @@ class Creature {
     } else {
       this.x = 0;
       this.y = Math.floor(Math.random() * fieldSize)
+    }
+console.log(this.x, this.y)
+    if (matrix[this.y][this.x] === 0) {
+      matrix[this.y][this.x] = this;
+    } else {
+      console.log('OCCUPIED' , matrix[this.y][this.x])
+      this.load(matrix);
     }
   }
 

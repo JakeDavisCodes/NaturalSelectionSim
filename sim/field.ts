@@ -20,7 +20,7 @@ class Field {
   }
 
   buildMatrix () {
-    this.matrix = Array(this.fieldSize).fill().map(() => Array(this.fieldSize).fill());
+    this.matrix = Array(this.fieldSize).fill(0).map(() => Array(this.fieldSize).fill(0));
   }
 
 
@@ -33,7 +33,7 @@ class Field {
 
   positionCreatures () {
     for (let i = 0; i < this.creatures.length; i++) {
-      this.creatures[i].load(this.fieldSize);
+      this.creatures[i].load(this.matrix);
     }
   }
 

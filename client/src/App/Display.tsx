@@ -1,35 +1,16 @@
 import React from 'react';
 
-function Display ({ field, setField }) {
+function Display ({ field }) {
 
   return (
-    <div
-      id="Display"
-      style={{
-        width: field.fieldSize * 50 + 'px',
-        height: field.fieldSize * 50 + 'px',
-      }}
-    >
-      <div id="Food">
-        {(field.food.map((food) => <div
-          className="food"
-          style={{
-            left: `${food.x * 50}px`,
-            bottom: `${food.y * 50}px`
-          }}
-        />))}
-      </div>
-      <div id="Creatures">
-        {(field.creatures.map((creature) => <div
-          className="crerature"
-          style={{
-            height: `${creature.size}px`,
-            width: `${creature.size}px`,
-            left: `${creature.x * 50}px`,
-            bottom: `${creature.y * 50}px`
-          }}
-        />))}
-      </div>
+    <div id="Display">
+      {field.matrix.map((col) => (
+        <div className="col">
+          {col.map((square) => (
+            <div className={`square ${square === 0 ? 'empty' : square.type}`}></div>
+          ))}
+        </div>
+      ))}
     </div>
   )
 };
