@@ -1,0 +1,12 @@
+#Display {
+  background-color: bisque;
+  position: absolute;
+}
+.food {
+  z-index: 1;
+  border-radius: 50%;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: greenyellow;
+}
