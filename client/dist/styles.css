@@ -1,5 +1,5 @@
 #Display {
-  background-color: bisque;
+  background-color: black;
   position: absolute;
 }
 .food {
@@ -9,4 +9,10 @@
   width: 10px;
   height: 10px;
   background-color: greenyellow;
+}
+.crerature {
+  z-index: 1;
+  border-radius: 50%;
+  position: absolute;
+  background-color: red;
 }

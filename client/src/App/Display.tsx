@@ -19,6 +19,17 @@ function Display ({ field, setField }) {
           }}
         />))}
       </div>
+      <div id="Creatures">
+        {(field.creatures.map((creature) => <div
+          className="crerature"
+          style={{
+            height: `${creature.size}px`,
+            width: `${creature.size}px`,
+            left: `${creature.x * 50}px`,
+            bottom: `${creature.y * 50}px`
+          }}
+        />))}
+      </div>
     </div>
   )
 };
