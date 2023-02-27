@@ -1,4 +1,5 @@
 import React from 'react';
+import Display from './Display';
 
 const Field = require('../../../sim/field.ts').default;
 
@@ -10,7 +11,9 @@ function App () {
   console.log(field.food[1])
 
   return (
-    <p>Hello </p>
+    <div>
+      <Display field={field} setField={setField} />
+    </div>
   )
 };
 
