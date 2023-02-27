@@ -5,10 +5,9 @@
   display: flex;
   justify-content: center;
 }
-#Details {
-  width: 100px;
-  height: 100px;
-  display: inline;
+#Details, #Controls {
+  width: 200px;
+  display: flex;
 }
 .col {
   display: inline;
@@ -24,4 +23,7 @@
 }
 .food {
   background-color: greenyellow;
+}
+input, label {
+  display: block;
 }

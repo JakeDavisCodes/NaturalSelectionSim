@@ -8,11 +8,13 @@ class Field {
   foodCount: number;
   food = new Array<typeof Food>();
   matrix: any[][];
+  foodOffest: any;
 
-  constructor (fieldSize = 20, creatureCount = 30) {
+  constructor (fieldSize = 20, creatureCount = 30, foodCount, foodOffest = 0.1) {
     this.fieldSize = fieldSize;
     this.creatureCount = creatureCount;
-    this.foodCount = creatureCount * 2;
+    this.foodCount = foodCount || creatureCount * 2;
+    this.foodOffest = foodOffest;
     this.creatures = new Array<typeof Creature>();
     this.food = new Array<typeof Food>();
 
@@ -46,6 +48,7 @@ class Field {
     for (let i = 0; i < this.foodCount; i++) {
       this.createFood();
     }
+    this.foodCount = this.foodCount * (1 - this.foodOffest)
   }
 
   createFood () {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Controls from './Controls';
 import Details from './Details';
 import Display from './Display';
 
@@ -30,6 +31,7 @@ function App () {
 
   return (
     <div id="Container">
+      <Controls field={field} setField={setField} update={forceUpdate} />
       <Display field={field} onSelect={onSelect} />
       <Details selected={selected} />
     </div>
