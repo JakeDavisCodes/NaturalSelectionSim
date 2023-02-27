@@ -35,9 +35,11 @@ class Creature {
     const right = Math.floor(Math.random() * 2) === 0 ? false : true;
 
     this.y = top ? fieldSize * 0.8 : 0;
-    this.y += fieldSize * 0.1;
+    this.y += Math.floor(Math.random() * (fieldSize * 0.1 + 1));
     this.x = right ? fieldSize * 0.8 : 0;
-    this.x += fieldSize * 0.1;
+    this.x += Math.floor(Math.random() * (fieldSize * 0.1 + 1));
+
+    console.log(this.x, this.y)
   }
 
   eat () {

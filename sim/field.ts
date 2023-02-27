@@ -23,6 +23,12 @@ class Field {
     }
   }
 
+  positionCreatures () {
+    for (let i = 0; i < this.creatures.length; i++) {
+      this.creatures[i].load(this.fieldSize);
+    }
+  }
+
   createCreature () {
     this.creatures.push(new Creature ())
   }

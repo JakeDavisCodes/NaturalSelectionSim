@@ -7,6 +7,7 @@ function App () {
   const [field, setField] = React.useState(new Field());
   field.populate()
   field.generateFood()
+  field.positionCreatures()
   console.log(field.creatures[0])
   console.log(field.food[1])
 
