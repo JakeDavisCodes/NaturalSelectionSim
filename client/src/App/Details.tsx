@@ -8,6 +8,13 @@ function Details ({ selected }) {
   return (
     <div id="Details">
       <h2>{selected.name}</h2>
+
+      <p>{`Food Eaten: ${selected.foodEaten}`}</p>
+      <p>{`Sight Distance: ${selected.sight}`}</p>
+      <p>{`Mutation Rate: ${selected.mutationRate}`}</p>
+      <p>{`Movement Speed: ${selected.movementSpeed}`}</p>
+      <p>{`Generations Survived: ${selected.generationsSurvived}`}</p>
+      <p>{`Children Had: ${selected.children}`}</p>
     </div>
   )
 };

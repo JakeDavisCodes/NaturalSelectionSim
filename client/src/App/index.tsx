@@ -17,9 +17,6 @@ function App () {
     field.buildMatrix()
     field.generateFood()
     field.positionCreatures()
-    console.log(field.matrix, field.matrix[0])
-    console.log(field.creatures[0])
-    console.log('food', field.food[1])
 
     forceUpdate();
   }, [])
@@ -29,11 +26,21 @@ function App () {
     if (square.type === 'creature') setSelected(square);
   }
 
+  let averages = field.averages();
+
   return (
-    <div id="Container">
-      <Controls field={field} setField={setField} update={forceUpdate} />
-      <Display field={field} onSelect={onSelect} />
-      <Details selected={selected} />
+    <div id="all">
+      <div id="Averages">
+        <h2>Averages</h2>
+        <p>{`Mutation Rate: ${averages.mutationRate}`}</p>
+        <p>{`Movement Speed: ${averages.movementSpeed}`}</p>
+        <p>{`Sight Distance: ${averages.sight}`}</p>
+      </div>
+      <div id="Container">
+        <Controls field={field} setField={setField} update={forceUpdate} />
+        <Display field={field} onSelect={onSelect} />
+        <Details selected={selected} />
+      </div>
     </div>
   )
 };
