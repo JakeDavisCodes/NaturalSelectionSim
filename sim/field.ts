@@ -21,10 +21,15 @@ class Field {
     this.matrix = []
   }
 
+  step () {
+    for (let i = 0; i < this.creatures.length; i++) {
+      this.creatures[i].step(this.matrix);
+    }
+  }
+
   buildMatrix () {
     this.matrix = Array(this.fieldSize).fill(0).map(() => Array(this.fieldSize).fill(0));
   }
-
 
   populate () {
     this.creatures = [];

@@ -17,6 +17,7 @@ function Controls ({ field, setField, update }) {
   }
   const step = () => {
     field.step();
+    update();
   }
   const generation = () => {
     field.nextGen();
