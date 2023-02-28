@@ -9,6 +9,13 @@ class Carnivore extends Creature {
     console.log(this)
   }
 
+  eat (creature) {
+    this.foodEaten += creature.size;
+    creature.dead = true;
+    creature.x = -1;
+    creature.y = -1;
+  }
+
   view (matrix: any[][]) {
     const seen: any[] = []
 
@@ -16,7 +23,7 @@ class Carnivore extends Creature {
     for (let i = 1; i <= this.sight; i++) {
       curr = this.x + i;
       if (curr > matrix.length - 1 || curr < 0 || matrix[this.y][curr].type === 'food') break;
-      if (matrix[this.y][curr].type === 'creature') {
+      if (matrix[this.y][curr].type === 'creature' && matrix[this.y][curr].size <= this.size + 0.2) {
         seen.push(matrix[this.y][curr]);
         break;
       }
@@ -24,7 +31,7 @@ class Carnivore extends Creature {
     for (let i = 1; i <= this.sight; i++) {
       curr = this.x - i;
       if (curr > matrix.length - 1 || curr < 0 || matrix[this.y][curr].type === 'food') break;
-      if (matrix[this.y][curr].type === 'creature') {
+      if (matrix[this.y][curr].type === 'creature' && matrix[this.y][curr].size <= this.size + 0.2) {
         seen.push(matrix[this.y][curr]);
         break;
       }
@@ -32,7 +39,7 @@ class Carnivore extends Creature {
     for (let i = 1; i <= this.sight; i++) {
       curr = this.y + i;
       if (curr > matrix.length - 1 || curr < 0 || matrix[curr][this.x].type === 'food') break;
-      if (matrix[curr][this.x].type === 'creature') {
+      if (matrix[curr][this.x].type === 'creature' && matrix[curr][this.x].size <= this.size + 0.2) {
         seen.push(matrix[curr][this.x]);
         break;
       }
@@ -40,7 +47,7 @@ class Carnivore extends Creature {
     for (let i = 1; i <= this.sight; i++) {
       curr = this.y - i;
       if (curr > matrix.length - 1 || curr < 0 || matrix[curr][this.x].type === 'food') break;
-      if (matrix[curr][this.x].type === 'creature') {
+      if (matrix[curr][this.x].type === 'creature' && matrix[curr][this.x].size <= this.size + 0.2) {
         seen.push(matrix[curr][this.x]);
         break;
       }
@@ -62,7 +69,7 @@ class Carnivore extends Creature {
       matrix[this.y][this.x] = 0;
       this.y = y || this.y;
       this.x = x || this.x;
-      target.type === 'creature' ? this.eat() : null;
+      target.type === 'creature' ? this.eat(target) : null;
     }
   }
 }

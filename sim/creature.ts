@@ -1,3 +1,5 @@
+import Carnivore from "./carnivore";
+
 const adjectives = ['confused', 'legendary', 'great', 'werid', 'fabled', 'mythical', 'godly', 'absolutely fabulous', 'apocryphal', 'awful', 'keen', 'zesty', 'superior', 'shoddy', 'weak', 'ruthless', 'zealous', 'unpleasent', 'incredible', 'demonic', 'mighty', 'feral'];
 const nouns = ['autonoumus unicorn', 'one', 'being', 'god', 'fool', 'clown', 'buffoon', 'monster', 'pirate', 'software developer', 'butter eater', 'child', 'beast', 'creature', 'sim', 'mouse', 'cheeto lover']
 const names = ['Shep Josh', 'Shep Kally', 'Shep Sean', 'Shep Soph', '"Nat"', 'Aimee', 'Alex', 'Archaa', 'Arpan', 'Mr. August', 'President Bolton', 'Space Bolton', 'Brett', 'Britta', 'Daniel', 'David', 'Demi', 'Donna', 'Erik', 'Gauri', 'George', 'Jacob', 'Jake', 'Jerrod', 'Jessica', 'Kathy', 'Kevin GPT', 'Kev', 'Mark', 'Mylani', 'Nathaniel', 'Patrick', 'Quanjing', 'Samuel', 'Sandy', 'Terrence', 'Tom', 'Tyler', 'Will', 'Josh', 'Zhixiang', 'Uncle J', 'Big T']
@@ -19,6 +21,7 @@ class Creature {
   y: number;
   type: string;
   stepsAvailable: number;
+  dead: any;
 
   constructor (movementSpeed: number, sight: number, mutationRate: number, size: number, speciesId: number = 1) {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
@@ -38,13 +41,16 @@ class Creature {
     this.y = 0;
     this.lastDir = null;
     this.stepsAvailable = 0;
+    this.dead = false;
   }
 
-  mutateFrom(parent: Creature) {
+  mutateFrom(parent: Creature | Carnivore) {
     this.mutationRate = parent.mutationRate;
     this.movementSpeed = parent.movementSpeed;
     this.sight = parent.sight;
+    this.size = parent.size;
     this.speciesId = parent.speciesId;
+    this.type = parent.type;
 
     if (Math.random() < 0.2 * this.mutationRate) {
       this.mutationRate += Math.random() > 0.5 ? Math.random() / 2 : Math.random() / -2;
@@ -147,7 +153,10 @@ class Creature {
   }
 
   step (matrix: any[][]) {
+    if (this.dead) return;
     this.stepsAvailable += (this.movementSpeed / this.size);
+    console.log(this.movementSpeed, this.size)
+    console.log('init', this.stepsAvailable, this.name)
 
     while (this.stepsAvailable >= 1) {
       const view = this.view(matrix);
@@ -168,6 +177,7 @@ class Creature {
       }
       this.move(matrix, dir);
       this.stepsAvailable--;
+      console.log(this.stepsAvailable, this.name)
     }
   }
 }

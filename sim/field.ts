@@ -35,12 +35,12 @@ class Field {
 
     const next = [];
     for (let i = 0; i < this.creatures.length; i++) {
-      if (this.creatures[i].foodEaten > 0) {
+      if (this.creatures[i].foodEaten > 0 && !this.creatures[i].dead) {
         this.creatures[i].generationsSurvived++;
         next.push(this.creatures[i])
         for (let j = 0; j < this.creatures[i].foodEaten - 1; j++) {
           this.creatures[i].children++;
-          const child = new Creature();
+          const child = this.creatures[i].type === 'carnivore' ? new Carnivore() : new Creature();
           child.mutateFrom(this.creatures[i])
           next.push(child);
         }
@@ -76,8 +76,9 @@ class Field {
     console.log(species)
     this.creatures = [];
     if (species.length > 0) {
+      console.log(species)
       for (let i = 0; i < species.length; i++) {
-        const speciesId = species[i].speciesId || 1;
+        const speciesId = species[i].speciesId;
         const movementSpeed = species[i].movementSpeed;
         const sight = species[i].sight;
         const mutationRate = species[i].mutationRate;

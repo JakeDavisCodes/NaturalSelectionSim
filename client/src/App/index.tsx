@@ -23,7 +23,7 @@ function App () {
 
   const onSelect = (square: any) => {
     if (square === 0) return;
-    if (square.type === 'creature') setSelected(square);
+    if (square.type === 'creature' || 'carnivore') setSelected(square);
   }
 
   let stats = field.stats();
