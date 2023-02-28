@@ -141,8 +141,9 @@ class Creature {
     if (dir === 'left') x = this.x - 1
     if (dir === 'up') y = this.y + 1
     if (dir === 'down') y = this.y - 1
+    console.log('dir', dir, 'x', x, 'y', y)
     const target = matrix[y || this.y][x || this.x];
-
+    console.log(target)
     if (target === 0 || target.type === 'food') {
       matrix[y || this.y][x || this.x] = this;
       matrix[this.y][this.x] = 0;
@@ -155,12 +156,14 @@ class Creature {
   step (matrix: any[][]) {
     if (this.dead) return;
     this.stepsAvailable += (this.movementSpeed / this.size);
-    console.log(this.movementSpeed, this.size)
-    console.log('init', this.stepsAvailable, this.name)
 
     while (this.stepsAvailable >= 1) {
       const view = this.view(matrix);
       let dir: string | any[];
+      if (this.lastDir === 'right' && this.x + 1 === matrix.length) this.lastDir = undefined;
+      if (this.lastDir === 'left' && this.x - 1 === -1) this.lastDir = undefined;
+      if (this.lastDir === 'up' && this.y + 1 === matrix.length) this.lastDir = undefined;
+      if (this.lastDir === 'down' && this.y - 1 === -1) this.lastDir = undefined;
 
       if (view) {
         if (view.x > this.x) dir = 'right';
@@ -169,15 +172,14 @@ class Creature {
         if (view.y < this.y) dir = 'down';
       } else {
         dir = this.lastDir ? [this.lastDir, this.lastDir, this.lastDir] : [];
-        if (this.x + 1 < 20) dir.push('right');
+        if (this.x + 1 < matrix.length) dir.push('right');
         if (this.x - 1 >= 0) dir.push('left');
-        if (this.y + 1 < 20) dir.push('up');
+        if (this.y + 1 < matrix.length) dir.push('up');
         if (this.y - 1 >= 0) dir.push('down');
         dir = dir[Math.floor(Math.random() * dir.length)];
       }
       this.move(matrix, dir);
       this.stepsAvailable--;
-      console.log(this.stepsAvailable, this.name)
     }
   }
 }

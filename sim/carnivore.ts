@@ -2,14 +2,14 @@ import Creature from "./creature";
 
 class Carnivore extends Creature {
   constructor (movementSpeed: number, sight: number, mutationRate: number, size: number, speciesId: number = 1) {
-    super(movementSpeed, sight, mutationRate, speciesId, size);
+    super(movementSpeed, sight, mutationRate, size, speciesId);
 
     this.type = 'carnivore'
 
     console.log(this)
   }
 
-  eat (creature) {
+  eatCreature (creature: { size: number; dead: boolean; x: number; y: number; }) {
     this.foodEaten += creature.size;
     creature.dead = true;
     creature.x = -1;
@@ -69,7 +69,7 @@ class Carnivore extends Creature {
       matrix[this.y][this.x] = 0;
       this.y = y || this.y;
       this.x = x || this.x;
-      target.type === 'creature' ? this.eat(target) : null;
+      target.type === 'creature' ? this.eatCreature(target) : null;
     }
   }
 }

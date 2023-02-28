@@ -36,6 +36,9 @@ html, body {
   flex-direction: column;
   align-items: center;
 }
+#Details p {
+  margin-top: 10px;
+}
 .col {
   display: inline;
 }

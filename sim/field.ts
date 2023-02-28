@@ -5,7 +5,7 @@ import Food from './food';
 class Field {
   creatureCount: number;
   fieldSize: number;
-  creatures: Creature[];
+  creatures: any[];
   foodCount: number;
   food: Food[];
   matrix: any[][];
@@ -40,13 +40,14 @@ class Field {
         next.push(this.creatures[i])
         for (let j = 0; j < this.creatures[i].foodEaten - 1; j++) {
           this.creatures[i].children++;
-          const child = this.creatures[i].type === 'carnivore' ? new Carnivore() : new Creature();
+          const child = this.creatures[i].type === 'carnivore' ? new Carnivore(1, 1, 2, 1) : new Creature(1, 1, 2, 1);
           child.mutateFrom(this.creatures[i])
           next.push(child);
         }
       }
       this.creatures[i].foodEaten = 0;
     }
+    // for (let i = 0; i < 3; i++) next.push(new Creature(1, 2, 1, 1, 3))
     this.creatures = next;
 
     this.buildMatrix();
@@ -102,8 +103,8 @@ class Field {
   }
 
   createCreature (movementSpeed, sight, mutationRate, speciesId, size, carnivore) {
-    if (carnivore) this.creatures.push(new Carnivore (movementSpeed, sight, mutationRate, speciesId, size))
-    else this.creatures.push(new Creature (movementSpeed, sight, mutationRate, speciesId, size))
+    if (carnivore) this.creatures.push(new Carnivore (movementSpeed, sight, mutationRate, size, speciesId))
+    else this.creatures.push(new Creature (movementSpeed, sight, mutationRate, size, speciesId))
   }
 
   generateFood () {
@@ -121,23 +122,29 @@ class Field {
   }
 
   stats () {
-    let mutationRate: number = 0, sight: number = 0, movementSpeed: number = 0;
+    let mutationRate: number = 0, sight: number = 0, movementSpeed: number = 0, size: number = 0;
+    const species = {};
 
     for (let i = 0; i < this.creatures.length; i++) {
+      species[this.creatures[i].speciesId]++;
       mutationRate += this.creatures[i].mutationRate;
       sight += this.creatures[i].sight;
       movementSpeed += this.creatures[i].movementSpeed;
+      size += this.creatures[i].size;
     }
 
     mutationRate = Math.floor(mutationRate * 100 / this.creatures.length) / 100;
     sight = Math.floor(sight * 100 / this.creatures.length) / 100;
     movementSpeed = Math.floor(movementSpeed * 100 / this.creatures.length) / 100;
+    size = Math.floor(size * 100 / this.creatures.length) / 100;
 
     return {
+      species,
       averages :{
         movementSpeed,
         sight,
         mutationRate,
+        size,
       },
       gen: this.generation,
       creatureNum: this.creatures.length,
