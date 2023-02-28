@@ -18,6 +18,7 @@ class Creature {
   x: number;
   y: number;
   type: string;
+  stepsAvailable: number;
 
   constructor (movementSpeed: number, sight: number, mutationRate: number, speciesId: number = 1) {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
@@ -36,6 +37,7 @@ class Creature {
     this.x = 0;
     this.y = 0;
     this.lastDir = null;
+    this.stepsAvailable = 0;
   }
 
   mutateFrom(parent: Creature) {
@@ -49,8 +51,8 @@ class Creature {
       this.mutationRate = Math.floor(this.mutationRate * 100) / 100;
     }
     if (Math.random() < 0.1 * this.mutationRate) {
-      this.movementSpeed += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
-      if (this.movementSpeed <= 0) this.movementSpeed = 1;
+      this.movementSpeed += Math.random() > 0.5 ? Math.random() : Math.random() * -1;
+      this.movementSpeed = Math.floor(this.movementSpeed * 100) / 100;
     }
     if (Math.random() < 0.05 * this.mutationRate) {
       this.sight += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
@@ -145,9 +147,9 @@ class Creature {
   }
 
   step (matrix: any[][]) {
-    let steps:number = this.movementSpeed;
+    this.stepsAvailable += this.movementSpeed;
 
-    while (steps !== 0) {
+    while (this.stepsAvailable >= 1) {
       const view = this.view(matrix);
       let dir: string | any[];
 
@@ -157,7 +159,7 @@ class Creature {
         if (view.y > this.y) dir = 'up';
         if (view.y < this.y) dir = 'down';
       } else {
-        dir = this.lastDir ? [this.lastDir, this.lastDir] : [];
+        dir = this.lastDir ? [this.lastDir, this.lastDir, this.lastDir] : [];
         if (this.x + 1 < 20) dir.push('right');
         if (this.x - 1 >= 0) dir.push('left');
         if (this.y + 1 < 20) dir.push('up');
@@ -165,7 +167,7 @@ class Creature {
         dir = dir[Math.floor(Math.random() * dir.length)];
       }
       this.move(matrix, dir);
-      steps--;
+      this.stepsAvailable--;
     }
   }
 }

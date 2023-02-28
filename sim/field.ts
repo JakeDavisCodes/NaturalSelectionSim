@@ -1,3 +1,5 @@
+import Carnivore from "./carnivore";
+
 const Creature = require('./creature.ts').default;
 const Food = require('./food.ts').default;
 
@@ -98,7 +100,7 @@ class Field {
   }
 
   createCreature (movementSpeed, sight, mutationRate, speciesId) {
-    this.creatures.push(new Creature (movementSpeed, sight, mutationRate, speciesId))
+    this.creatures.push(new Carnivore (movementSpeed, sight, mutationRate, speciesId))
   }
 
   generateFood () {
