@@ -1,14 +1,13 @@
 import Carnivore from "./carnivore";
-
-const Creature = require('./creature.ts').default;
-const Food = require('./food.ts').default;
+import Creature from './creature';
+import Food from './food';
 
 class Field {
   creatureCount: number;
   fieldSize: number;
-  creatures = new Array<typeof Creature>();
+  creatures: Creature[];
   foodCount: number;
-  food = new Array<typeof Food>();
+  food: Food[];
   matrix: any[][];
   foodOffest: any;
   stepsTaken: number;
@@ -21,8 +20,8 @@ class Field {
     this.foodCount = foodCount || creatureCount * 2;
     this.foodOffest = foodOffest;
     this.maxSteps = 15;
-    this.creatures = new Array<typeof Creature>();
-    this.food = new Array<typeof Food>();
+    this.creatures = [];
+    this.food = [];
 
     this.matrix = []
     this.stepsTaken = 0;
@@ -79,16 +78,18 @@ class Field {
     if (species.length > 0) {
       for (let i = 0; i < species.length; i++) {
         const speciesId = species[i].speciesId || 1;
-        const movementSpeed = species[i].movementSpeed || 1;
-        const sight = species[i].sight || 2;
-        const mutationRate = species[i].mutationRate === undefined ? 1 : species[i].mutationRate;
+        const movementSpeed = species[i].movementSpeed;
+        const sight = species[i].sight;
+        const mutationRate = species[i].mutationRate;
+        const size = species[i].size;
+        const carnivore = species[i].carnivore;
         for (let j = 0; j < this.creatureCount / species.length; j++) {
-          this.createCreature(movementSpeed, sight, mutationRate, speciesId)
+          this.createCreature(movementSpeed, sight, mutationRate, speciesId, size, carnivore)
         }
       }
     } else {
       for (let i = 0; i < this.creatureCount; i++) {
-        this.createCreature(1, 2, 1, 1)
+        this.createCreature(1, 2, 1, 1, 1, false)
       }
     }
   }
@@ -99,8 +100,9 @@ class Field {
     }
   }
 
-  createCreature (movementSpeed, sight, mutationRate, speciesId) {
-    this.creatures.push(new Carnivore (movementSpeed, sight, mutationRate, speciesId))
+  createCreature (movementSpeed, sight, mutationRate, speciesId, size, carnivore) {
+    if (carnivore) this.creatures.push(new Carnivore (movementSpeed, sight, mutationRate, speciesId, size))
+    else this.creatures.push(new Creature (movementSpeed, sight, mutationRate, speciesId, size))
   }
 
   generateFood () {

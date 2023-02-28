@@ -8,9 +8,11 @@ function Controls ({ field, setField, update }) {
   const [foodOffset, setFoodOffset] = React.useState();
 
   const [species, setSpecies] = React.useState([]);
-  const [movementSpeed, setMovementSpeed] = React.useState();
-  const [sight, setSight] = React.useState();
-  const [mutationRate, setMutationRate] = React.useState();
+  const [movementSpeed, setMovementSpeed] = React.useState(1);
+  const [sight, setSight] = React.useState(2);
+  const [mutationRate, setMutationRate] = React.useState(1);
+  const [size, setSize] = React.useState(1);
+  const [carnivore, setCarnivore] = React.useState(false);
 
   const createField = () => {
     const field = new Field(fieldSize, creatureCount, foodAmount, foodOffset)
@@ -26,7 +28,10 @@ function Controls ({ field, setField, update }) {
       movementSpeed,
       sight,
       mutationRate,
+      size,
+      carnivore,
     }
+    console.log(newSpecies)
     setSpecies([...species, newSpecies]);
   }
   const step = () => {
@@ -62,6 +67,10 @@ function Controls ({ field, setField, update }) {
         <input type="text" id="sight" onChange={(e) => setSight(+e.target.value)}></input>
         <label>Mutation Rate: </label>
         <input type="text" id="mutationRate" onChange={(e) => setMutationRate(+e.target.value)}></input>
+        <label>Size: </label>
+        <input type="text" id="size" onChange={(e) => setSize(+e.target.value)}></input>
+        <label>Carnivore: </label>
+        <input type="checkbox" id="Carnivore" onChange={(e) => setCarnivore(!carnivore)}></input>
         <button id="AddSpecies" onClick={addSpecies}>Add!</button>
       </div>
       <button className="step" onClick={step}>Step</button>

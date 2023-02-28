@@ -129,7 +129,7 @@ class Creature {
     return seen[0];
   }
 
-  move (matrix: any[][], dir: string) {
+  move (matrix: any[][], dir: string | string[]) {
     let x: number, y: number;
     if (dir === 'right') x = this.x + 1
     if (dir === 'left') x = this.x - 1
