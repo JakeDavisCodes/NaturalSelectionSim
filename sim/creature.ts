@@ -6,13 +6,13 @@ class Creature {
   mutationRate: number;
   sight: number;
   movementSpeed: number;
+  size: number;
 
   name: string;
   speciesId: number;
   generationsSurvived: number;
   children: number;
   foodEaten: number;
-  creaturesKilled: number;
   lastDir: string;
 
   x: number;
@@ -20,18 +20,18 @@ class Creature {
   type: string;
   stepsAvailable: number;
 
-  constructor (movementSpeed: number, sight: number, mutationRate: number, speciesId: number = 1) {
+  constructor (movementSpeed: number, sight: number, mutationRate: number, size: number, speciesId: number = 1) {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
     this.speciesId = speciesId;
 
     this.movementSpeed = movementSpeed;
     this.sight = sight;
     this.mutationRate = mutationRate;
+    this.size  = size;
 
     this.generationsSurvived = 0;
     this.children = 0;
     this.foodEaten = 0;
-    this.creaturesKilled = 0;
     this.type = 'creature';
 
     this.x = 0;
@@ -147,7 +147,7 @@ class Creature {
   }
 
   step (matrix: any[][]) {
-    this.stepsAvailable += this.movementSpeed;
+    this.stepsAvailable += (this.movementSpeed / this.size);
 
     while (this.stepsAvailable >= 1) {
       const view = this.view(matrix);
