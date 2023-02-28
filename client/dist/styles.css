@@ -1,5 +1,20 @@
-#Display {
+html, body {
+  background-color: darkgray;
+}
+
+#Stats {
+  margin: auto;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#Display {
+  background-color: burlywood;
+  display: flex;
+  padding: 10px;
+}
+#GenStats, #Averages {
+  margin: 10px;
 }
 #all {
   margin: auto;
@@ -8,6 +23,8 @@
   align-items: center;
 }
 #Container {
+  background-color: burlywood;
+  padding: 10px;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -26,13 +43,26 @@
   width: 50px;
   height: 50px;
   background-color: black;
-  margin: 3px;
+  margin: 5px;
 }
-.creature {
+.species1 {
   background-color: red;
+}
+.species2 {
+  background-color: orange;
+}
+.species3 {
+  background-color: yellow;
 }
 .food {
   background-color: greenyellow;
+}
+
+#NewSpecies, #NewField {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 input, label {
   display: block;

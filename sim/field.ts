@@ -11,6 +11,7 @@ class Field {
   foodOffest: any;
   stepsTaken: number;
   maxSteps: number;
+  generation: number;
 
   constructor (fieldSize = 20, creatureCount = 30, foodCount: number, foodOffest = 0.1) {
     this.fieldSize = fieldSize;
@@ -23,6 +24,7 @@ class Field {
 
     this.matrix = []
     this.stepsTaken = 0;
+    this.generation = 1;
   }
 
   nextGen () {
@@ -32,13 +34,11 @@ class Field {
 
     const next = [];
     for (let i = 0; i < this.creatures.length; i++) {
-      console.log(`${this.creatures[i].name}, ${this.creatures[i].foodEaten}`)
       if (this.creatures[i].foodEaten > 0) {
         this.creatures[i].generationsSurvived++;
         next.push(this.creatures[i])
         for (let j = 0; j < this.creatures[i].foodEaten - 1; j++) {
           this.creatures[i].children++;
-          console.log(`${this.creatures[i].name} had a child!`)
           const child = new Creature();
           child.mutateFrom(this.creatures[i])
           next.push(child);
@@ -53,6 +53,7 @@ class Field {
     this.generateFood();
 
     this.stepsTaken = 0;
+    this.generation++;
   }
 
   step () {
@@ -70,10 +71,23 @@ class Field {
     this.matrix = Array(this.fieldSize).fill(0).map(() => Array(this.fieldSize).fill(0));
   }
 
-  populate () {
+  populate (species) {
+    console.log(species)
     this.creatures = [];
-    for (let i = 0; i < this.creatureCount; i++) {
-      this.createCreature()
+    if (species.length > 0) {
+      for (let i = 0; i < species.length; i++) {
+        const speciesId = species[i].speciesId || 1;
+        const movementSpeed = species[i].movementSpeed || 1;
+        const sight = species[i].sight || 2;
+        const mutationRate = species[i].mutationRate === undefined ? 1 : species[i].mutationRate;
+        for (let j = 0; j < this.creatureCount / species.length; j++) {
+          this.createCreature(movementSpeed, sight, mutationRate, speciesId)
+        }
+      }
+    } else {
+      for (let i = 0; i < this.creatureCount; i++) {
+        this.createCreature(1, 2, 1, 1)
+      }
     }
   }
 
@@ -83,8 +97,8 @@ class Field {
     }
   }
 
-  createCreature () {
-    this.creatures.push(new Creature ())
+  createCreature (movementSpeed, sight, mutationRate, speciesId) {
+    this.creatures.push(new Creature (movementSpeed, sight, mutationRate, speciesId))
   }
 
   generateFood () {
@@ -101,7 +115,7 @@ class Field {
     this.food.push(thisFood);
   }
 
-  averages () {
+  stats () {
     let mutationRate: number = 0, sight: number = 0, movementSpeed: number = 0;
 
     for (let i = 0; i < this.creatures.length; i++) {
@@ -115,9 +129,13 @@ class Field {
     movementSpeed = Math.floor(movementSpeed * 100 / this.creatures.length) / 100;
 
     return {
-      movementSpeed,
-      sight,
-      mutationRate,
+      averages :{
+        movementSpeed,
+        sight,
+        mutationRate,
+      },
+      gen: this.generation,
+      creatureNum: this.creatures.length,
     }
   }
 }

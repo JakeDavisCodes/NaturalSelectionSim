@@ -13,7 +13,7 @@ function App () {
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
   React.useEffect(() => {
-    field.populate()
+    field.populate([])
     field.buildMatrix()
     field.generateFood()
     field.positionCreatures()
@@ -26,15 +26,21 @@ function App () {
     if (square.type === 'creature') setSelected(square);
   }
 
-  let averages = field.averages();
+  let stats = field.stats();
 
   return (
     <div id="all">
-      <div id="Averages">
-        <h2>Averages</h2>
-        <p>{`Mutation Rate: ${averages.mutationRate}`}</p>
-        <p>{`Movement Speed: ${averages.movementSpeed}`}</p>
-        <p>{`Sight Distance: ${averages.sight}`}</p>
+      <div id="Stats">
+        <div id="GenStats">
+          <h1>Generation {stats.gen}</h1>
+          <p>{stats.creatureNum} Creatures</p>
+        </div>
+        <div id="Averages">
+          <h2>Averages</h2>
+          <p>{`Mutation Rate: ${stats.averages.mutationRate}`}</p>
+          <p>{`Movement Speed: ${stats.averages.movementSpeed}`}</p>
+          <p>{`Sight Distance: ${stats.averages.sight}`} </p>
+        </div>
       </div>
       <div id="Container">
         <Controls field={field} setField={setField} update={forceUpdate} />

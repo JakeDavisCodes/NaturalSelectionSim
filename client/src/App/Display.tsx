@@ -7,7 +7,7 @@ function Display ({ field, onSelect }) {
       {field.matrix.map((col) => (
         <div className="col">
           {col.map((square) => (
-            <div className={`square ${square === 0 ? 'empty' : square.type}`} onClick={() => onSelect(square)}></div>
+            <div className={`square ${square === 0 ? 'empty' : square.type === 'food' ? 'food' : 'species' + square.speciesId}`} onClick={() => onSelect(square)}></div>
           ))}
         </div>
       ))}

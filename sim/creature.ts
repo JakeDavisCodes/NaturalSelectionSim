@@ -8,6 +8,7 @@ class Creature {
   movementSpeed: number;
 
   name: string;
+  speciesId: number;
   generationsSurvived: number;
   children: number;
   foodEaten: number;
@@ -18,11 +19,14 @@ class Creature {
   y: number;
   type: string;
 
-  constructor () {
+  constructor (movementSpeed: number, sight: number, mutationRate: number, speciesId: number = 1) {
     this.name = `The ${adjectives[Math.floor(Math.random() * adjectives.length)]} ${nouns[Math.floor(Math.random() * nouns.length)]}, ${names[Math.floor(Math.random() * names.length)]}`
-    this.movementSpeed = 1;
-    this.sight = 2;
-    this.mutationRate = 1;
+    this.speciesId = speciesId;
+
+    this.movementSpeed = movementSpeed;
+    this.sight = sight;
+    this.mutationRate = mutationRate;
+
     this.generationsSurvived = 0;
     this.children = 0;
     this.foodEaten = 0;
@@ -38,10 +42,11 @@ class Creature {
     this.mutationRate = parent.mutationRate;
     this.movementSpeed = parent.movementSpeed;
     this.sight = parent.sight;
+    this.speciesId = parent.speciesId;
 
     if (Math.random() < 0.2 * this.mutationRate) {
       this.mutationRate += Math.random() > 0.5 ? Math.random() / 2 : Math.random() / -2;
-      if (this.mutationRate < 0) this.mutationRate = 0.2;
+      this.mutationRate = Math.floor(this.mutationRate * 100) / 100;
     }
     if (Math.random() < 0.1 * this.mutationRate) {
       this.movementSpeed += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
@@ -58,17 +63,17 @@ class Creature {
     const fieldSize = matrix.length - 1;
 
     if (wall === 0) {
-      this.x = Math.floor(Math.random() * fieldSize)
+      this.x = Math.floor((Math.random() * fieldSize * 0.7) + (fieldSize * 0.15))
       this.y = 0;
     } else if (wall === 1) {
       this.x = fieldSize;
-      this.y = Math.floor(Math.random() * fieldSize)
+      this.y = Math.floor((Math.random() * fieldSize * 0.7) + (fieldSize * 0.15))
     } else if (wall === 2) {
-      this.x = Math.floor(Math.random() * fieldSize)
+      this.x = Math.floor((Math.random() * fieldSize * 0.7) + (fieldSize * 0.15))
       this.y = fieldSize;
     } else {
       this.x = 0;
-      this.y = Math.floor(Math.random() * fieldSize)
+      this.y = Math.floor((Math.random() * fieldSize * 0.7) + (fieldSize * 0.15))
     }
 
     if (matrix[this.y][this.x] === 0) {
@@ -85,7 +90,7 @@ class Creature {
   view (matrix: any[][]) {
     const seen: any[] = []
 
-    let curr;
+    let curr: number;
     for (let i = 1; i <= this.sight; i++) {
       curr = this.x + i;
       if (curr > matrix.length - 1 || curr < 0 || matrix[this.y][curr].type === 'creature') break;
@@ -144,7 +149,7 @@ class Creature {
 
     while (steps !== 0) {
       const view = this.view(matrix);
-      let dir;
+      let dir: string | any[];
 
       if (view) {
         if (view.x > this.x) dir = 'right';
