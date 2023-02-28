@@ -17,9 +17,6 @@ function App () {
     field.buildMatrix()
     field.generateFood()
     field.positionCreatures()
-    console.log(field.matrix, field.matrix[0])
-    console.log(field.creatures[0])
-    console.log('food', field.food[1])
 
     forceUpdate();
   }, [])

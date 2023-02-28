@@ -1,6 +1,6 @@
 const adjectives = ['confused', 'legendary', 'great', 'werid', 'fabled', 'mythical', 'godly', 'absolutely fabulous', 'apocryphal', 'awful', 'keen', 'zesty', 'superior', 'shoddy', 'weak', 'ruthless', 'zealous', 'unpleasent', 'incredible', 'demonic', 'mighty', 'feral'];
 const nouns = ['autonoumus unicorn', 'one', 'being', 'god', 'fool', 'clown', 'buffoon', 'monster', 'pirate', 'software developer', 'butter eater', 'child', 'beast', 'creature', 'sim', 'mouse', 'cheeto lover']
-const names = ['Shep Josh', 'Shep Kally', 'Shep Sean', 'Shep Soph', '"Nat"', 'Aimee', 'Alex', 'Archaa', 'Arpan', 'Mr. August', 'President Bolton', 'Space Bolton', 'Brett', 'Britta', 'Daniel', 'David', 'Demi', 'Donna', 'Erik', 'Gauri', 'George', 'Jacob', 'Jake', 'Jerrod', 'Jessica', 'Kathy', 'Kevin GPT', 'Kev', 'Mark', 'Mylani', 'Nathaniel', 'Patrick', 'Quanjing', 'Samuel', 'Sandy', 'Terrence', 'Tom', 'Tyler', 'Will', 'Josh', 'Zhixiang', 'Uncle J']
+const names = ['Shep Josh', 'Shep Kally', 'Shep Sean', 'Shep Soph', '"Nat"', 'Aimee', 'Alex', 'Archaa', 'Arpan', 'Mr. August', 'President Bolton', 'Space Bolton', 'Brett', 'Britta', 'Daniel', 'David', 'Demi', 'Donna', 'Erik', 'Gauri', 'George', 'Jacob', 'Jake', 'Jerrod', 'Jessica', 'Kathy', 'Kevin GPT', 'Kev', 'Mark', 'Mylani', 'Nathaniel', 'Patrick', 'Quanjing', 'Samuel', 'Sandy', 'Terrence', 'Tom', 'Tyler', 'Will', 'Josh', 'Zhixiang', 'Uncle J', 'Big T']
 
 class Creature {
   mutationRate: number;
@@ -32,6 +32,25 @@ class Creature {
     this.x = 0;
     this.y = 0;
     this.lastDir = null;
+  }
+
+  mutateFrom(parent: Creature) {
+    this.mutationRate = parent.mutationRate;
+    this.movementSpeed = parent.movementSpeed;
+    this.sight = parent.sight;
+
+    if (Math.random() < 0.2 * this.mutationRate) {
+      this.mutationRate += Math.random() > 0.5 ? Math.random() / 2 : Math.random() / -2;
+      if (this.mutationRate < 0) this.mutationRate = 0.2;
+    }
+    if (Math.random() < 0.1 * this.mutationRate) {
+      this.movementSpeed += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
+      if (this.movementSpeed <= 0) this.movementSpeed = 1;
+    }
+    if (Math.random() < 0.05 * this.mutationRate) {
+      this.sight += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
+      if (this.sight < 1) this.sight = 1;
+    }
   }
 
   load (matrix: any[][]) {

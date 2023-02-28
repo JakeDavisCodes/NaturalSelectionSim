@@ -21,6 +21,8 @@ function Controls ({ field, setField, update }) {
   }
   const generation = () => {
     field.nextGen();
+    update();
+    console.log('g')
   }
 
   return (
