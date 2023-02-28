@@ -104,16 +104,19 @@ class Creature {
   }
 
   move (matrix: any[][], dir: string) {
-    let x, y;
+    let x: number, y: number;
     if (dir === 'right') x = this.x + 1
     if (dir === 'left') x = this.x - 1
     if (dir === 'up') y = this.y + 1
     if (dir === 'down') y = this.y - 1
+    const target = matrix[y || this.y][x || this.x];
 
-    const target = matrix[y][x];
     if (target === 0 || target.type === 'food') {
-      matrix[y][x] = this;
+      matrix[y || this.y][x || this.x] = this;
       matrix[this.y][this.x] = 0;
+      this.y = y || this.y;
+      this.x = x || this.x;
+      target.type === 'food' ? this.eat() : null;
     }
   }
 
@@ -121,14 +124,14 @@ class Creature {
     let steps:number = this.movementSpeed;
 
     while (steps !== 0) {
-      const view:any = this.view(matrix);
+      const view = this.view(matrix);
       let dir;
 
       if (view) {
         if (view.x > this.x) dir = 'right';
         if (view.x < this.x) dir = 'left';
-        if (view.y > this.x) dir = 'up';
-        if (view.y < this.x) dir = 'down';
+        if (view.y > this.y) dir = 'up';
+        if (view.y < this.y) dir = 'down';
       } else {
         dir = this.lastDir ? [this.lastDir, this.lastDir] : [];
         if (this.x + 1 < 20) dir.push('right');
@@ -138,6 +141,7 @@ class Creature {
         dir = dir[Math.floor(Math.random() * dir.length)];
       }
       this.move(matrix, dir);
+      steps--;
     }
   }
 }
