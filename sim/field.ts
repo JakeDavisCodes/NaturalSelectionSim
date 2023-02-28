@@ -10,7 +10,7 @@ class Field {
   matrix: any[][];
   foodOffest: any;
 
-  constructor (fieldSize = 20, creatureCount = 30, foodCount, foodOffest = 0.1) {
+  constructor (fieldSize = 20, creatureCount = 30, foodCount: number, foodOffest = 0.1) {
     this.fieldSize = fieldSize;
     this.creatureCount = creatureCount;
     this.foodCount = foodCount || creatureCount * 2;
@@ -60,6 +60,29 @@ class Field {
     const thisFood = new Food()
     thisFood.load(this.matrix);
     this.food.push(thisFood);
+  }
+
+  averages () {
+    let mutationRate: number = 0, sight: number = 0, movementSpeed: number = 0;
+
+    for (let i = 0; i < this.creatures.length; i++) {
+      console.log(this.creatures[i].mutationRate)
+      mutationRate += this.creatures[i].mutationRate;
+      sight += this.creatures[i].sight;
+      movementSpeed += this.creatures[i].movementSpeed;
+    }
+
+    console.log(mutationRate)
+
+    mutationRate = Math.floor(mutationRate * 100 / this.creatures.length) / 100;
+    sight = Math.floor(sight * 100 / this.creatures.length) / 100;
+    movementSpeed = Math.floor(movementSpeed * 100 / this.creatures.length) / 100;
+
+    return {
+      movementSpeed,
+      sight,
+      mutationRate,
+    }
   }
 }
 

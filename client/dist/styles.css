@@ -1,9 +1,17 @@
 #Display {
   display: flex;
 }
-#Container {
+#all {
+  margin: auto;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#Container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 #Details, #Controls {
   width: 500px;
