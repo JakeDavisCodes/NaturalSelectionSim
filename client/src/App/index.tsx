@@ -3,6 +3,7 @@ import React from 'react';
 import Controls from './Controls';
 import Details from './Details';
 import Display from './Display';
+import Login from './Login';
 
 const Field = require('../../../sim/field.ts').default;
 
@@ -22,8 +23,8 @@ function App () {
         url: `session/${cookie}`
       })
         .then((data) => {
-          console.log(data)
-          setUser(data);
+          console.log(data.data)
+          if (data.data.length > 0) setUser(data.data[0].username);
         })
         .catch((err) => {
           console.error(err)
@@ -49,6 +50,7 @@ function App () {
 
   return (
     <div id="all">
+      <Login user={user} setUser={setUser} />
       <div id="Stats">
         <div id="GenStats">
           <h1>Generation {stats.gen}</h1>
