@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import Controls from './Controls';
 import Details from './Details';
@@ -8,9 +9,27 @@ const Field = require('../../../sim/field.ts').default;
 function App () {
   const [field, setField] = React.useState(new Field());
   const [selected, setSelected] = React.useState();
+  const [user, setUser] = React.useState();
 
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
+
+  React.useEffect(() => {
+    const cookie = document.cookie.match(/s_id=[^;]+/)[0].split('=')[1];
+    if (cookie) {
+      axios({
+        method: 'GET',
+        url: '/session'
+      })
+        .then((data) => {
+          console.log(data)
+          setUser(data);
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    }
+  }, [])
 
   React.useEffect(() => {
     field.populate([])
