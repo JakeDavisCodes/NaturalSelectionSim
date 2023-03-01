@@ -12,6 +12,11 @@ const controler = {
         .catch((err) => console.error(err))
     }
   },
+  postSession: (req, res) => {
+    model.createSession(req.params.s_id, req.params.username)
+      .then(() => res.sendStatus(201))
+      .catch((err) => console.error(err))
+  },
   getUser: (req, res) => {
     model.getUser(req.body)
       .then((data) => {

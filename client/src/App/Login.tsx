@@ -8,6 +8,8 @@ function Display ({ user, setUser }) {
   const [pwd, setPwd] = React.useState('');
   const [hash, setHash] = React.useState('');
 
+  console.log(username, pwd)
+
   const login = () => {
     if (username.length > 5 && pwd > 5) {
       axios({
@@ -67,7 +69,14 @@ function Display ({ user, setUser }) {
 
   return (
     <div id="Login">
-
+      <div className="login inputs">
+        <input placeholder="Username" type="text" className="login" onChange={(e) => setUsername(e.target.value)}></input>
+        <input placeholder="Password" type="password" className="login" onChange={(e) => setPwd(e.target.value)}></input>
+      </div>
+      <div className="login buttons">
+        <button className="login" onClick={login} >Log In</button>
+        <button className="login" onClick={signup} >Sign Up</button>
+      </div>
     </div>
   );
 };
