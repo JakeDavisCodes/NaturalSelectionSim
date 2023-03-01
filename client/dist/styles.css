@@ -1,14 +1,45 @@
-#Display {
+* {
+  transition: all ease 0.4s;
+  color: white;
+  font-family: 'Rubik', sans-serif;
+}
+p, input, label, button {
+  font-size:x-large;
+}
+
+html, body {
+  background-image: url('./imgs/bgsvg.svg');
+  background-size: cover ;
+  background-position: center;
+  padding: 0px;
+  margin: 0px;
+}
+
+#Stats {
+  margin: auto;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#Display {
+  background-image: url('./imgs/pixelGrass.gif');
+  display: flex;
+  padding: 10px;
+  margin: 0px;
+}
+#GenStats, #Averages {
+  margin: 10px;
 }
 #all {
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px;
 }
 #Container {
-  margin: auto;
+  background-color: rgba(33,25,25, 0.6);
+  margin: auto auto 0px auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,26 +50,63 @@
   flex-direction: column;
   align-items: center;
 }
+#Details p {
+  margin-top: 10px;
+}
 .col {
   display: inline;
 }
 .square {
   width: 50px;
   height: 50px;
-  background-color: black;
-  margin: 3px;
+  border: solid 3px white
 }
-.creature {
-  background-color: red;
+.species1 {
+  background-image: url('./imgs/slime.gif');
+  background-size: cover ;
+  background-position: center;
+}
+.species2 {
+  background-image: url('./imgs/red.gif');
+  background-size: cover ;
+  background-position: center;
+}
+.species3 {
+  background-image: url('./imgs/purple.gif');
+  background-size: cover ;
+  background-position: center;
 }
 .food {
-  background-color: greenyellow;
+  background-image: url('./imgs/apple.png');
+  background-size: cover ;
+  background-position: center;
+}
+
+.sidesShadow{
+  box-shadow: 0 0px 60px 60px rgba(33,25,25,0.6);
+  clip-path: inset(0px -300px 0px -300px);
+}
+.sidesShadow.white{
+  box-shadow: 0px 0px 10px 5px #ffffffbb;
+}
+
+#NewSpecies, #NewField {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 input, label {
   display: block;
 }
 button {
+  border: 0px;
+  border-radius: 20%;
+  background-color: rgb(144,0,71);
   width: 50%;
-  margin-top: 30px;
-  padding: 20px;
+  margin-top: 10px;
+  padding: 15px;
+}
+button:hover {
+  background-color: rgb(213, 0, 107);
 }
