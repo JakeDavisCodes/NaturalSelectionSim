@@ -19,7 +19,7 @@ function App () {
     if (cookie) {
       axios({
         method: 'GET',
-        url: '/session'
+        url: `session/${cookie}`
       })
         .then((data) => {
           console.log(data)

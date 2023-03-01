@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const path = require('path');
 
 const router = require('./router.js');
+const db = require('./db.js').db;
 
 const app = express();
 const port = 3000;

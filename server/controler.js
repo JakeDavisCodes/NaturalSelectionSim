@@ -6,8 +6,11 @@ const controler = {
     else {
       model.getSession(req.params.s_id)
         .then((data) => {
-          console.log(data)
-          res.status(200).send(data)
+          console.log('data', data)
+          res.status(200).json(data)
+        })
+        .catch((err) => {
+          console.error(err)
         })
     }
   }
