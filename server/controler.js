@@ -13,16 +13,21 @@ const controler = {
     }
   },
   postSession: (req, res) => {
-    model.createSession(req.params.s_id, req.params.username)
+    model.createSession(req.body)
       .then(() => res.sendStatus(201))
       .catch((err) => console.error(err))
   },
   getUser: (req, res) => {
-    model.getUser(req.body)
+    model.getUser(req.params.username, req.params.hash)
       .then((data) => {
         console.log('getUser', data)
         res.status(200).json(data)
       })
+      .catch((err) => console.error(err))
+  },
+  postUser: (req, res) => {
+    model.createUser(req.body)
+      .then(() => res.sendStatus(201))
       .catch((err) => console.error(err))
   }
 }

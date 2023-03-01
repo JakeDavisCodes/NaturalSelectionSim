@@ -16,14 +16,17 @@ function App () {
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
   React.useEffect(() => {
-    const cookie = document.cookie.match(/s_id=[^;]+/)[0].split('=')[1];
+    let cookie = document.cookie.match(/s_id=[^;]+/);
+    console.log(cookie)
     if (cookie) {
+      cookie = cookie[0].split('=')[1]
+      console.log(cookie)
       axios({
         method: 'GET',
         url: `session/${cookie}`
       })
         .then((data) => {
-          console.log(data.data)
+          console.log('look', data.data)
           if (data.data.length > 0) setUser(data.data[0].username);
         })
         .catch((err) => {

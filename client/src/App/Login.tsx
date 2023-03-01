@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 
+import SHA256 from 'crypto-js/sha256';
+
 function Display ({ user, setUser }) {
   if (user) return null;
 
@@ -8,16 +10,17 @@ function Display ({ user, setUser }) {
   const [pwd, setPwd] = React.useState('');
   const [hash, setHash] = React.useState('');
 
-  console.log(username, pwd)
+  console.log(username, pwd, hash)
 
   const login = () => {
-    if (username.length > 5 && pwd > 5) {
+    if (username.length > 5 && pwd.length > 5) {
       axios({
         method: 'GET',
-        url: `/user/:username/:hash`
+        url: `/user/${username}/${hash}`
       })
         .then((data) => {
-          if (data.data) {
+          console.log('data.data', data.data)
+          if (data.data.length) {
             setUser(username)
             const s_id = Math.floor(Math.random() * 10000000);
             axios({
@@ -28,7 +31,9 @@ function Display ({ user, setUser }) {
                 s_id,
               },
             })
-            document.cookie += `; s_id=${s_id}`
+            console.log(`; s_id=${s_id}`)
+            document.cookie = `s_id=${s_id}`
+            console.log(document.cookie)
           } else {
             alert('User does not exist')
           }
@@ -39,7 +44,7 @@ function Display ({ user, setUser }) {
     }
   }
   const signup = () => {
-    if (username.length > 5 && pwd > 5) {
+    if (username.length > 5 && pwd.length > 5) {
       axios({
         method: 'post',
         url: `/user`,
@@ -71,7 +76,7 @@ function Display ({ user, setUser }) {
     <div id="Login">
       <div className="login inputs">
         <input placeholder="Username" type="text" className="login" onChange={(e) => setUsername(e.target.value)}></input>
-        <input placeholder="Password" type="password" className="login" onChange={(e) => setPwd(e.target.value)}></input>
+        <input placeholder="Password" type="password" className="login" onChange={(e) => {setPwd(e.target.value); setHash(SHA256(e.target.value).toString())}}></input>
       </div>
       <div className="login buttons">
         <button className="login" onClick={login} >Log In</button>
