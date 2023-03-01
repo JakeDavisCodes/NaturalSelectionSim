@@ -57,12 +57,17 @@ class Creature {
       this.mutationRate = Math.floor(this.mutationRate * 100) / 100;
     }
     if (Math.random() < 0.1 * this.mutationRate) {
-      this.movementSpeed += Math.random() > 0.5 ? Math.random() : Math.random() * -1;
+      this.movementSpeed += Math.random() > 0.5 ? Math.random() * 0.5 : Math.random() * -0.5;
       this.movementSpeed = Math.floor(this.movementSpeed * 100) / 100;
     }
     if (Math.random() < 0.05 * this.mutationRate) {
       this.sight += Math.random() > 0.5 ? Math.floor(Math.random() * 2) : Math.floor(Math.random() * -2);
       if (this.sight < 1) this.sight = 1;
+    }
+    if (Math.random() < 0.1 * this.mutationRate) {
+      this.size += Math.random() > 0.5 ? Math.random() * 0.5 : Math.random() * -0.5;
+      this.size = Math.floor(this.size * 100) / 100;
+      if (this.size < 0.5) this.size = 0.5;
     }
   }
 
@@ -141,9 +146,7 @@ class Creature {
     if (dir === 'left') x = this.x - 1
     if (dir === 'up') y = this.y + 1
     if (dir === 'down') y = this.y - 1
-    console.log('dir', dir, 'x', x, 'y', y)
     const target = matrix[y || this.y][x || this.x];
-    console.log(target)
     if (target === 0 || target.type === 'food') {
       matrix[y || this.y][x || this.x] = this;
       matrix[this.y][this.x] = 0;
@@ -155,7 +158,7 @@ class Creature {
 
   step (matrix: any[][]) {
     if (this.dead) return;
-    this.stepsAvailable += (this.movementSpeed / this.size);
+    this.stepsAvailable += (this.movementSpeed * 1.5 - this.size / 2);
 
     while (this.stepsAvailable >= 1) {
       const view = this.view(matrix);

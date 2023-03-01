@@ -123,10 +123,10 @@ class Field {
 
   stats () {
     let mutationRate: number = 0, sight: number = 0, movementSpeed: number = 0, size: number = 0;
-    const species = {};
+    const species = [];
 
     for (let i = 0; i < this.creatures.length; i++) {
-      species[this.creatures[i].speciesId]++;
+      species[this.creatures[i].speciesId - 1] ? species[this.creatures[i].speciesId - 1]++ : species[this.creatures[i].speciesId - 1] = 1;
       mutationRate += this.creatures[i].mutationRate;
       sight += this.creatures[i].sight;
       movementSpeed += this.creatures[i].movementSpeed;

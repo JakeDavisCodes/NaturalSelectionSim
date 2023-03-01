@@ -33,16 +33,20 @@ function App () {
       <div id="Stats">
         <div id="GenStats">
           <h1>Generation {stats.gen}</h1>
-          <p>{stats.creatureNum} Creatures</p>
+          <p>{stats.creatureNum} Total Creatures</p>
+          {stats.species.map((specie: number, idx: number) =>
+            <p>Species ID-{idx + 1} has {specie} members</p>
+          )}
         </div>
         <div id="Averages">
           <h2>Averages</h2>
           <p>{`Mutation Rate: ${stats.averages.mutationRate}`}</p>
           <p>{`Movement Speed: ${stats.averages.movementSpeed}`}</p>
           <p>{`Sight Distance: ${stats.averages.sight}`} </p>
+          <p>{`Size: ${stats.averages.size}`} </p>
         </div>
       </div>
-      <div id="Container">
+      <div id="Container" className="sidesShadow">
         <Controls field={field} setField={setField} update={forceUpdate} />
         <Display field={field} onSelect={onSelect} />
         <Details selected={selected} />

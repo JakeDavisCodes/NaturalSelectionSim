@@ -31,7 +31,6 @@ function Controls ({ field, setField, update }) {
       size,
       carnivore,
     }
-    console.log(newSpecies)
     setSpecies([...species, newSpecies]);
   }
   const step = () => {
@@ -41,7 +40,6 @@ function Controls ({ field, setField, update }) {
   const generation = () => {
     field.nextGen();
     update();
-    console.log('g')
   }
 
   return (
@@ -60,7 +58,7 @@ function Controls ({ field, setField, update }) {
       </div>
       <div id="NewSpecies">
         <p>Species Options</p>
-        <h3>Species being added: {species.length}</h3>
+        <p>Species being added: {species.length}</p>
         <label>Movement Speed: </label>
         <input type="text" id="movementSpeed" onChange={(e) => setMovementSpeed(+e.target.value)}></input>
         <label>Sight Distance: </label>
@@ -71,7 +69,7 @@ function Controls ({ field, setField, update }) {
         <input type="text" id="size" onChange={(e) => setSize(+e.target.value)}></input>
         <label>Carnivore: </label>
         <input type="checkbox" id="Carnivore" onChange={(e) => setCarnivore(!carnivore)}></input>
-        <button id="AddSpecies" onClick={addSpecies}>Add!</button>
+        <button id="AddSpecies" onClick={addSpecies}>Add Species!</button>
       </div>
       <button className="step" onClick={step}>Step</button>
       <button className="generation" onClick={generation}>Next Generation</button>

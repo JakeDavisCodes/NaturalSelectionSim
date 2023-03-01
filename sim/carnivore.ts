@@ -5,8 +5,6 @@ class Carnivore extends Creature {
     super(movementSpeed, sight, mutationRate, size, speciesId);
 
     this.type = 'carnivore'
-
-    console.log(this)
   }
 
   eatCreature (creature: { size: number; dead: boolean; x: number; y: number; }) {
