@@ -9,10 +9,16 @@ const controler = {
           console.log('data', data)
           res.status(200).json(data)
         })
-        .catch((err) => {
-          console.error(err)
-        })
+        .catch((err) => console.error(err))
     }
+  },
+  getUser: (req, res) => {
+    model.getUser(req.body)
+      .then((data) => {
+        console.log('getUser', data)
+        res.status(200).json(data)
+      })
+      .catch((err) => console.error(err))
   }
 }
 
