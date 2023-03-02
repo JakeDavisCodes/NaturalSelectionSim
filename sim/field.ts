@@ -44,7 +44,7 @@ class Field {
           child.mutateFrom(this.creatures[i])
           next.push(child);
         }
-      }
+      } else this.creatures[i].dead = true;
       this.creatures[i].foodEaten = 0;
     }
     // for (let i = 0; i < 3; i++) next.push(new Creature(1, 2, 1, 1, 3))

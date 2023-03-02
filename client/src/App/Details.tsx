@@ -1,10 +1,11 @@
 import React from 'react';
 
 function Details ({ selected }) {
-  if (!selected) return (
+  if (!selected || selected.dead) return (
     <div id="Details">
     </div>
   )
+  console.log(selected)
   return (
     <div id="Details">
       <h1>{selected.name}</h1>

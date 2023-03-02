@@ -3,6 +3,7 @@ import React from 'react';
 import Controls from './Controls';
 import Details from './Details';
 import Display from './Display';
+import Login from './Login';
 
 const Field = require('../../../sim/field.ts').default;
 
@@ -15,15 +16,18 @@ function App () {
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
   React.useEffect(() => {
-    const cookie = document.cookie.match(/s_id=[^;]+/)[0].split('=')[1];
+    let cookie:any = document.cookie.match(/s_id=[^;]+/);
+    console.log(cookie)
     if (cookie) {
+      cookie = cookie[0].split('=')[1]
+      console.log(cookie)
       axios({
         method: 'GET',
-        url: '/session'
+        url: `session/${cookie}`
       })
         .then((data) => {
-          console.log(data)
-          setUser(data);
+          console.log('look', data.data)
+          if (data.data.length > 0) setUser(data.data[0].username);
         })
         .catch((err) => {
           console.error(err)
@@ -41,7 +45,8 @@ function App () {
   }, [])
 
   const onSelect = (square: any) => {
-    if (square === 0) return;
+    console.log(square ? square.type : square)
+    if (square === 0 || square.type === 'food') return;
     if (square.type === 'creature' || 'carnivore') setSelected(square);
   }
 
@@ -49,6 +54,7 @@ function App () {
 
   return (
     <div id="all">
+      <Login user={user} setUser={setUser} />
       <div id="Stats">
         <div id="GenStats">
           <h1>Generation {stats.gen}</h1>
