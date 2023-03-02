@@ -5,6 +5,7 @@ function Details ({ selected }) {
     <div id="Details">
     </div>
   )
+  console.log(selected)
   return (
     <div id="Details">
       <h1>{selected.name}</h1>
