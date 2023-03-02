@@ -16,7 +16,7 @@ Install the required dependencies by running npm install in the project director
 Start the server by running npm start.
 Open the app in your browser by navigating to http://localhost:3000.
 
-#Usage
+# Usage
 To use the Natural Selection Web App, follow these steps:
 
 Create a new population by selecting the desired traits and setting the initial population size or leave blank.
