@@ -57,7 +57,7 @@ function Controls ({ field, setField, update }) {
         <button id="CreateField" onClick={createField}>Create!</button>
       </div>
       <div id="NewSpecies">
-        <p>Species Options</p>
+        <h2>Species Options</h2>
         <p>Species being added: {species.length}</p>
         <label>Movement Speed: </label>
         <input type="text" id="movementSpeed" onChange={(e) => setMovementSpeed(+e.target.value)}></input>

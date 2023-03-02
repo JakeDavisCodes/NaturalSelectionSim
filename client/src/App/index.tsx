@@ -16,7 +16,7 @@ function App () {
   const forceUpdate = React.useCallback(() => updateState({}), []);
 
   React.useEffect(() => {
-    let cookie = document.cookie.match(/s_id=[^;]+/);
+    let cookie:any = document.cookie.match(/s_id=[^;]+/);
     console.log(cookie)
     if (cookie) {
       cookie = cookie[0].split('=')[1]
@@ -45,7 +45,8 @@ function App () {
   }, [])
 
   const onSelect = (square: any) => {
-    if (square === 0) return;
+    console.log(square ? square.type : square)
+    if (square === 0 || square.type === 'food') return;
     if (square.type === 'creature' || 'carnivore') setSelected(square);
   }
 
